@@ -9,10 +9,11 @@ public enum EmployeeType {
 	
 	private final double baseWage;
 
-	EmployeeType(double baseWage) {
+	EmployeeType(double baseWage) { //constructor
 		this.baseWage=baseWage;
 	}
-	double baseWage() {
+	
+	double baseWage() { //getter
 		return baseWage;
 	}
 }

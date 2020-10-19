@@ -7,9 +7,8 @@ public class Control {
 		Person petra = new	Person("Petra", 21, pepa);
 		Person pepik = new Person("Pepik", 3);
 		
-		Person[] family = {pepa, petra, pepik, pepik.createClone()};
 		
-		House houseOne = new House(4, family );
+		House houseOne = new House(4, new Person[] {pepa, petra, pepik, pepik.createClone()} );
 		houseOne.assesLivingConditions();
 		
 	}

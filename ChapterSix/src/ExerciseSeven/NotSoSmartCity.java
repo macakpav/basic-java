@@ -48,7 +48,9 @@ public class NotSoSmartCity {
 		
 		// double  = city.getAverageAmountOfMoney(); // Infinity
 
-		// NullPointerException HOW?
+		// NullPointerException
+		NotSoSmartCity fakeCity = new NotSoSmartCity("Face City", 10, 450.1, null);
+		fakeCity.printInhabitantNames();
 
 		city.printInhabitantNames(); // Array out of bounds for nbInhabitants larger
 		// than string length

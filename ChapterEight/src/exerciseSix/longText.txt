@@ -1,0 +1,7 @@
+Exercise 6
+Write a program that reads in a simple text file and 
+stores how many times each word in that file occurs. 
+ou can decide upon how to parse the text in the file, 
+for example by making use of Java’s StringTokenizer class 
+or another approach. Make use of Java’s java.util.HashMap 
+class in your implementation.

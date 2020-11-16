@@ -1,11 +1,11 @@
 
   Name, Number of Blueberry, Number of Chocolate, Number of Red Velvet 
 
- Maria ,  5,2,4 
+ Maria ,  5,2,4 ,2
 
-   Tim , 0,  10 , 25
+   Tim , 0,  10 , 25,0
    
-   Petra, 2, 5, 1
+   Petra, 2, 5, 1,0
  
  
  

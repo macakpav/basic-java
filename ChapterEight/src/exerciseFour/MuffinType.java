@@ -10,13 +10,14 @@ package exerciseFour;
 public enum MuffinType {
     BLUEBERRY("Blueberry", 3),
     CHOCOLATE("Chocolate", 2.5),
-    RED_VELVET("Red Velvet", 3.5);
+    RED_VELVET("Red Velvet", 3.5),
+    MARSHMALLOW("Marshmallow", 4);
 
     private String name;
     private double price;
 
     private MuffinType(String name, double price) {
-	this.name = name;
+	this.name = name.trim();
 	this.price = price;
     }
 

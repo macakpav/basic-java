@@ -26,11 +26,8 @@ public class OrderList implements Iterable<Order> {
 	return this.orders.iterator();
     }
 
-    public void addOrder(String customerName, int noBlueberry, int noChocolate,
-	    int noRedvelvet) {
-	this.orders.add(new Order(this.noOrders, customerName, noBlueberry,
-		noChocolate, noRedvelvet));
-	this.noOrders++;
+    public void addOrder(String customerName, int counts[]) {
+	this.orders.add(new Order(this.noOrders++, customerName, counts));
     }
 
     /**

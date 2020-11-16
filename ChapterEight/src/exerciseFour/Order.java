@@ -7,6 +7,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.HashMap;
+import java.util.InputMismatchException;
 
 /**
  * @author Pavel Mačák
@@ -16,6 +17,20 @@ public class Order {
     private final int id;
     private final String customerName;
     private HashMap<MuffinType, Integer> orderedMuffins;
+
+    public Order(int id, String customerName, int counts[])
+	    throws InputMismatchException {
+	this.id = id;
+	this.customerName = customerName;
+	this.orderedMuffins = new HashMap<MuffinType, Integer>();
+	if (MuffinType.values().length != counts.length)
+	    throw new InputMismatchException(
+		    "Number of known muffin types and number of inputs are different!");
+	int i = 0;
+	for (MuffinType muffin : MuffinType.values()) {
+	    this.orderedMuffins.put(muffin, counts[i++]);
+	}
+    }
 
     public Order(int id, String customerName, int noBlueberry, int noChocolate,
 	    int noRedvelvet) {

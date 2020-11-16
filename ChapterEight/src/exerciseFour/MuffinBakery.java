@@ -16,6 +16,7 @@ import java.util.Scanner;
  */
 public class MuffinBakery {
     OrderList orders;
+    final static int noMuffinTypes = MuffinType.values().length;
 
     public MuffinBakery() {
 	this.orders = new OrderList();
@@ -37,13 +38,13 @@ public class MuffinBakery {
 		}
 		String line;
 		String[] buf;
-		int[] counts = new int[3];
+		int[] counts = new int[noMuffinTypes];
 		while (scan.hasNextLine()) {
 		    line = scan.nextLine().trim();
 		    if (line.equals(""))
 			continue;
 		    buf = line.split(",");
-		    if (buf.length != 4)
+		    if (buf.length != 1 + noMuffinTypes)
 			throw new InputMismatchException(
 				"Line has wrong format: " + line);
 		    for (int i = 1; i < buf.length; i++) {
@@ -55,8 +56,7 @@ public class MuffinBakery {
 					    + buf[i]);
 			}
 		    }
-		    this.orders.addOrder(buf[0].trim(), counts[0], counts[1],
-			    counts[2]);
+		    this.orders.addOrder(buf[0].trim(), counts);
 
 		}
 	    }

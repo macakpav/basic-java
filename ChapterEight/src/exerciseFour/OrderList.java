@@ -3,6 +3,7 @@
  */
 package exerciseFour;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -40,6 +41,11 @@ public class OrderList implements Iterable<Order> {
     }
 
     public void generateInvoices(String folderPath) {
+	File file = new File(folderPath);
+	if (!file.isDirectory() && !file.mkdir()) {
+	    System.out.println("Couldn’t create invoices directory");
+	    return;
+	}
 	for (Order order : this.orders) {
 	    order.createInvoiceFile(folderPath);
 	}

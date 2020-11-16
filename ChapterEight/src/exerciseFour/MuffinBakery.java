@@ -24,7 +24,7 @@ public class MuffinBakery {
     public static void main(String[] args) {
 	MuffinBakery myBakery = new MuffinBakery();
 	if (myBakery.readOrderFile("src/exerciseFour/orders.txt")) {
-	    System.out.print(myBakery.orders);
+	    System.out.print(myBakery);
 	    myBakery.generateInvoces("src/exerciseFour/Invoices/");
 	}
     }
@@ -76,6 +76,11 @@ public class MuffinBakery {
     public void generateInvoces(String folderPath) {
 	this.orders.generateInvoices(folderPath);
 	return;
+    }
+
+    @Override
+    public String toString() {
+	return "MuffinBakery:\n" + this.orders;
     }
 
 }

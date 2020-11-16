@@ -6,6 +6,7 @@ package exerciseFour;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.HashMap;
 
 /**
  * @author Pavel Mačák
@@ -14,45 +15,49 @@ import java.io.Writer;
 public class Order {
     private final int id;
     private final String customerName;
-    private final int noBlueberry;
-    private final int noChocolate;
-    private final int noRedvelvet;
+    private HashMap<MuffinType, Integer> orderedMuffins;
 
     public Order(int id, String customerName, int noBlueberry, int noChocolate,
 	    int noRedvelvet) {
 	this.id = id;
 	this.customerName = customerName;
-	this.noBlueberry = noBlueberry;
-	this.noChocolate = noChocolate;
-	this.noRedvelvet = noRedvelvet;
+	this.orderedMuffins = new HashMap<MuffinType, Integer>();
+	this.orderedMuffins.put(MuffinType.BLUEBERRY, noBlueberry);
+	this.orderedMuffins.put(MuffinType.CHOCOLATE, noChocolate);
+	this.orderedMuffins.put(MuffinType.RED_VELVET, noRedvelvet);
     }
 
     private String invoiceString() {
-	return "Dear " + this.customerName + "," + System.lineSeparator()
+	int count;
+	String invoice = "Dear " + this.customerName + "," + System.lineSeparator()
 		+ System.lineSeparator() + "we have received your order."
 		+ System.lineSeparator() + System.lineSeparator()
 		+ "Here is the summary and price of your order:"
-		+ System.lineSeparator()
-		+ (this.noBlueberry == 0 ? ""
-			: this.noBlueberry + " Blueberry muffin"
-				+ (this.noBlueberry > 1 ? "s" : ""))
-		+ System.lineSeparator()
-		+ (this.noChocolate == 0 ? ""
-			: this.noChocolate + " Chocolate muffin"
-				+ (this.noChocolate > 1 ? "s" : ""))
-		+ System.lineSeparator()
-		+ (this.noRedvelvet == 0 ? ""
-			: this.noRedvelvet + " Red Velvet muffin"
-				+ (this.noRedvelvet > 1 ? "s" : ""))
-		+ System.lineSeparator() + System.lineSeparator()
-		+ "Overall cost of this order is " + this.getCost() + " Euro."
-		+ System.lineSeparator() + "Thank you for loving the Muffin Bakery!";
+		+ System.lineSeparator() + System.lineSeparator();
+	for (MuffinType muffin : MuffinType.values()) {
+	    if (!this.orderedMuffins.containsKey(muffin))
+		continue;
+	    count = this.orderedMuffins.get(muffin);
+	    invoice += (count == 0 ? ""
+		    : count + " " + muffin.getName() + " muffin"
+			    + (count > 1 ? "s" : ""))
+		    + System.lineSeparator();
+
+	}
+	invoice += System.lineSeparator() + "Overall cost of this order is "
+		+ this.getCost() + " Euro." + System.lineSeparator()
+		+ "Thank you for loving the Muffin Bakery!";
+	return invoice;
     }
 
     public double getCost() {
-	return this.noBlueberry * MuffinType.BLUEBERRY.getPrice()
-		+ this.noChocolate * MuffinType.CHOCOLATE.getPrice()
-		+ this.noRedvelvet * MuffinType.RED_VELVET.getPrice();
+	double cost = 0;
+	for (MuffinType muffin : MuffinType.values()) {
+	    if (!this.orderedMuffins.containsKey(muffin))
+		continue;
+	    cost += muffin.getPrice() * this.orderedMuffins.get(muffin);
+	}
+	return cost;
     }
 
     private String invoiceFileName() {
@@ -61,9 +66,14 @@ public class Order {
 
     @Override
     public String toString() {
-	return "Order [id=" + this.id + ", customerName=" + this.customerName
-		+ ", noBlueberry=" + this.noBlueberry + ", noChocolate="
-		+ this.noChocolate + ", noRedvelvet=" + this.noRedvelvet + "]";
+	String str = "Order: id = " + this.id + ", customer name = "
+		+ this.customerName;
+	for (MuffinType muffin : MuffinType.values()) {
+	    if (!this.orderedMuffins.containsKey(muffin))
+		continue;
+	    str += ", " + this.orderedMuffins.get(muffin) + " " + muffin.getName();
+	}
+	return str;
     }
 
     /**

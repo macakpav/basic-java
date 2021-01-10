@@ -39,13 +39,12 @@ public class PlayerAnalyser {
 		int len = nbGoalsScored.length;
 		if (len % 2 == 0) {
 			return (nbGoalsScored[len / 2 - 1] + nbGoalsScored[len / 2]) / 2.0;
-		} else {
-			return nbGoalsScored[len / 2];
 		}
+		return nbGoalsScored[len / 2];
 	}
 
 	public static void main(String[] args) {
-		int[] goals = { 1, 2, 2, 3, 3};
+		int[] goals = { 1, 2, 2, 3, 3 };
 		System.out.println(medianGoalsScored(goals));
 		System.out.println(meanGoalsScored(goals));
 		System.out.println(maxGoalsScored(goals));

@@ -1,5 +1,5 @@
 /**
- * 
+ *  
  */
 package exerciseFour;
 
@@ -11,77 +11,78 @@ import java.util.Scanner;
 
 /**
  * 
- * @author Pavel Mačák
+ * @author Pavel Macak
  *
  */
 public class MuffinBakery {
-    OrderList orders;
-    final static int noMuffinTypes = MuffinType.values().length;
+	OrderList orders;
+	final static int noMuffinTypes = MuffinType.values().length;
 
-    public MuffinBakery() {
-	this.orders = new OrderList();
-    }
-
-    public static void main(String[] args) {
-	MuffinBakery myBakery = new MuffinBakery();
-	if (myBakery.readOrderFile("src/exerciseFour/orders.txt")) {
-	    System.out.print(myBakery);
-	    myBakery.generateInvoces("src/exerciseFour/Invoices/");
+	public MuffinBakery() {
+		this.orders = new OrderList();
 	}
-    }
 
-    public boolean readOrderFile(String fileName) {
-	try (FileInputStream file = new FileInputStream(fileName)) {
-
-	    try (Scanner scan = new Scanner(file)) {
-		while (scan.nextLine().trim().equals("")) {
+	public static void main(String[] args) {
+		MuffinBakery myBakery = new MuffinBakery();
+		if (myBakery.readOrderFile("src/exerciseFour/orders.txt")) {
+			System.out.print(myBakery);
+			myBakery.generateInvoces("src/exerciseFour/Invoices/");
 		}
-		String line;
-		String[] buf;
-		int[] counts = new int[noMuffinTypes];
-		while (scan.hasNextLine()) {
-		    line = scan.nextLine().trim();
-		    if (line.equals(""))
-			continue;
-		    buf = line.split(",");
-		    if (buf.length != 1 + noMuffinTypes)
-			throw new InputMismatchException(
-				"Line has wrong format: " + line);
-		    for (int i = 1; i < buf.length; i++) {
-			try {
-			    counts[i - 1] = Integer.parseUnsignedInt(buf[i].trim());
-			} catch (NumberFormatException ex) {
-			    throw new InputMismatchException(
-				    "Invalid entry in file. Expected integer, got:"
-					    + buf[i]);
+	}
+
+	public boolean readOrderFile(String fileName) {
+		try (FileInputStream file = new FileInputStream(fileName)) {
+
+			try (Scanner scan = new Scanner(file)) {
+				while (scan.nextLine().trim().equals("")) {
+					// skip empty lines
+				}
+				String line;
+				String[] buf;
+				int[] counts = new int[noMuffinTypes];
+				while (scan.hasNextLine()) {
+					line = scan.nextLine().trim();
+					if (line.equals(""))
+						continue;
+					buf = line.split(",");
+					if (buf.length != 1 + noMuffinTypes)
+						throw new InputMismatchException(
+								"Line has wrong format: " + line);
+					for (int i = 1; i < buf.length; i++) {
+						try {
+							counts[i - 1] = Integer.parseUnsignedInt(buf[i].trim());
+						} catch (NumberFormatException ex) {
+							throw new InputMismatchException(
+									"Invalid entry in file. Expected integer, got:"
+											+ buf[i]);
+						}
+					}
+					this.orders.addOrder(buf[0].trim(), counts);
+
+				}
 			}
-		    }
-		    this.orders.addOrder(buf[0].trim(), counts);
-
+			return true;
+		} catch (FileNotFoundException e) {
+			System.out.println("Could not find the file " + fileName + "!");
+		} catch (IOException e) {
+			System.out.println("Error trying to open file " + fileName + "!");
+			e.printStackTrace();
+		} catch (InputMismatchException e) {
+			System.out.println(e.getMessage());
+			System.out.println("Error reading file " + fileName + "!");
 		}
-	    }
-	    return true;
-	} catch (FileNotFoundException e) {
-	    System.out.println("Could not find the file " + fileName + "!");
-	} catch (IOException e) {
-	    System.out.println("Error trying to open file " + fileName + "!");
-	    e.printStackTrace();
-	} catch (InputMismatchException e) {
-	    System.out.println(e.getMessage());
-	    System.out.println("Error reading file " + fileName + "!");
+		return false;
 	}
-	return false;
-    }
 
-    public void generateInvoces(String folderPath) {
-	this.orders.generateInvoices(folderPath);
-	return;
-    }
+	public void generateInvoces(String folderPath) {
+		this.orders.generateInvoices(folderPath);
+		return;
+	}
 
-    @Override
-    public String toString() {
-	return "MuffinBakery:\n" + this.orders;
-    }
+	@Override
+	public String toString() {
+		return "MuffinBakery:\n" + this.orders;
+	}
 
 }
 
@@ -102,9 +103,9 @@ public class MuffinBakery {
  * Chocolate, Number of Red Velvet Maria, 5,2,4 Tim 0,10,2 Etc. Additional part
  * of the exercise: add amounts of whitespace to the orders.txt file and run
  * your program again to see if it still works; if not, make the necessary
- * changes. Alternative exercise: make use of Java’s StringTokenizer class to
- * write this application; you can find the API here (focus on the “Token”
- * methods, not the “Element” methods):
+ * changes. Alternative exercise: make use of Javas StringTokenizer class to
+ * write this application; you can find the API here (focus on the Token
+ * methods, not the Element methods):
  * https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/util/
  * StringTokenizer.html
  *
